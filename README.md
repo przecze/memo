@@ -12,4 +12,6 @@ docker-compose up -d
 docker-compose exec memodrop ./manage.py createsuperuser
 ```
 Create superuser `root` with password `rootroot`
+4. Log in and create "German" category in memodrop
+5. Run the script add.py on host to add new words
 
