@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  memodrop:
+    image: joeig/memodrop:latest
+    ports:
+      - 127.0.0.1:8000:8000
+    volumes:
+      - ${PWD}/db.sqlite3:/usr/src/app/db.sqlite3
