@@ -7,3 +7,5 @@ services:
       - 127.0.0.1:8000:8000
     volumes:
       - ${PWD}/db.sqlite3:/usr/src/app/db.sqlite3
+      - ${PWD}/add_memodrop.py:/usr/src/app/add_memodrop.py
+      - ${PWD}/shared:/usr/src/app/shared
