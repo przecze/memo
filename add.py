@@ -6,6 +6,7 @@ import requests
 import os
 import sys
 import argparse
+from collections import defaultdict
 from cmd import Cmd
 
 def do_add(inp):
@@ -39,15 +40,23 @@ def do_add(inp):
     while True:
         try:
             selection = input(f"Select (1-{len(meanings)}):")
-            selected = meanings[int(selection)-1]
+            if ',' in selection:
+                selection = selection.split(',')
+            selected = [meanings[int(s)-1] for s in selection]
             break
         except IndexError:
             print("Wrong index. Try again.")
-    with open("shared/entry.txt", "w") as f:
-        print(selected[0], file=f)
-        print(selected[1], file=f)
-        print(selected[2], file=f)
-    subprocess.check_call(["docker-compose", "exec", "memodrop", "./add_memodrop.py"])
+        except ValueError:
+            print("Incorrect format. Try again.")
+    selected_by_words = defaultdict(list)
+    for *word, meaning in selected:
+        selected_by_words[(*word,)].append(meaning)
+    for word, meanings in selected_by_words.items():
+        with open("shared/entry.txt", "w") as f:
+            print(word[0], file=f)
+            print(word[1], file=f)
+            print('* '+'\n* '.join(meanings), file=f)
+        subprocess.check_call(["docker-compose", "exec", "memodrop", "./add_memodrop.py"])
 
 if __name__ == '__main__':
     while(True):

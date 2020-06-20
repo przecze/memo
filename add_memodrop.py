@@ -9,7 +9,8 @@ from categories.models import *
 if __name__ == '__main__':
     with open("shared/entry.txt", "r") as f:
         lines = f.readlines()
-    [word, grammar, definition] = lines
+    word, grammar, *definition = lines
+    definition = '\n'.join(definition)
     # Definition as answer
     Card(category=Category.objects.get(name="German"),
          question=f"{word} (Bedeutung?)",
