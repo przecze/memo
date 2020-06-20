@@ -55,7 +55,12 @@ def do_add(inp):
         with open("shared/entry.txt", "w") as f:
             print(word[0], file=f)
             print(word[1], file=f)
-            print('* '+'\n* '.join(meanings), file=f)
+            if len(meanings) > 1:
+                print(meanings)
+                print('* '+'\n* '.join(meanings), file=f)
+            else:
+                [m] = meanings
+                print(m, file=f)
         subprocess.check_call(["docker-compose", "exec", "memodrop", "./add_memodrop.py"])
 
 if __name__ == '__main__':
